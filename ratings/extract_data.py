@@ -51,7 +51,8 @@ def main():
         print(f'{fname}: {len(records)} recs — {perp_count} perplexity')
 
     GRADE_LLM_MAP = {'gemma':'Gemma 3 (ft)','deepseek':'DeepSeek R1 (ft)','gemini':'Gemini 2.5',}
-    GRADE_PIPELINE_MAP = {'tabular': 'Tabular-based','network':'Network-based','hybrid':'Bimodal',}
+    # judge/llm_judge.ipynb writes {llm}_bimodal_grades.jsonl; 'hybrid' kept for older files
+    GRADE_PIPELINE_MAP = {'tabular': 'Tabular-based','network':'Network-based','bimodal':'Bimodal','hybrid':'Bimodal',}
     for grade_file in sorted(GRADES_DIR.glob('*_grades.jsonl')):
         parts = grade_file.stem.replace('_grades', '').rsplit('_', 1)
         if len(parts) != 2:
@@ -59,13 +60,17 @@ def main():
         llm_key, pipeline_key = parts
         pipeline = GRADE_PIPELINE_MAP.get(pipeline_key)
         llm = GRADE_LLM_MAP.get(llm_key)
+        if pipeline is None or llm is None:
+            print(f'{grade_file.name}: unknown llm or pipeline key, skipped')
+            continue
         grade_recs = [json.loads(l) for l in grade_file.read_text().splitlines() if l.strip()]
-        
+
         for rec in grade_recs:
             for key, metric in METRIC_MAP.items():
                 val = rec.get(key)
                 if val not in (0, None):
-                    judge_rows.append({'pipeline': pipeline, 'llm': llm, 'metric': metric, 'score': val})
+                    judge_rows.append({'pipeline': pipeline, 'llm': llm, 'metric': metric, 'score': val,
+                                       'record_index': rec.get('record_index')})
 
         print(f'{grade_file.name}: {len(grade_recs)} graded records')
 
@@ -78,7 +83,7 @@ def main():
 
     judge_path = OUT_DIR / 'llm_judge_data.csv'
     with open(judge_path, 'w', newline='') as f:
-        w = csv.DictWriter(f, fieldnames=['pipeline', 'llm', 'metric', 'score'])
+        w = csv.DictWriter(f, fieldnames=['pipeline', 'llm', 'metric', 'score', 'record_index'])
         w.writeheader()
         w.writerows(judge_rows)
     print(f'Wrote {len(judge_rows)} rows -> {judge_path}')
