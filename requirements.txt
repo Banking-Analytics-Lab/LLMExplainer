@@ -1,0 +1,33 @@
+# The package versions used for the paper were not recorded. Names only, taken from the imports in the code.
+anthropic
+backoff
+bitsandbytes
+datasets
+google-generativeai
+joblib
+matplotlib
+nltk
+numpy
+openai
+pandas
+peft
+python-dateutil
+python-dotenv
+requests
+scikit-learn
+scipy
+seaborn
+shap
+statsmodels
+tenacity
+textblob
+textstat
+torch
+torch-geometric
+tqdm
+transformers
+trl
+vaderSentiment
+xgboost
+# Not imported directly: transformers needs it to load models with device_map="auto" and 8-bit quantization.
+accelerate

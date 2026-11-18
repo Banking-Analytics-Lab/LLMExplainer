@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper below."
+title: "LLMExplainer"
+license: Apache-2.0
+authors:
+  - family-names: "Zandi"
+    given-names: "Sahab"
+  - family-names: "Kostesku"
+    given-names: "Noah"
+  - family-names: "Mues"
+    given-names: "Christophe"
+  - family-names: "Óskarsdóttir"
+    given-names: "María"
+  - family-names: "Bravo"
+    given-names: "Cristián"
+preferred-citation:
+  type: article
+  title: "Communicating Credit Risk with Large Language Models: Evaluation of Explanations from Standard and Alternative Data-Based Models"
+  year: 2026
+  journal: "arXiv preprint arXiv:2608.17715"
+  doi: "10.48550/arXiv.2608.17715"
+  url: "https://arxiv.org/abs/2608.17715"
+  authors:
+    - family-names: "Zandi"
+      given-names: "Sahab"
+    - family-names: "Kostesku"
+      given-names: "Noah"
+    - family-names: "Mues"
+      given-names: "Christophe"
+    - family-names: "Óskarsdóttir"
+      given-names: "María"
+    - family-names: "Bravo"
+      given-names: "Cristián"
